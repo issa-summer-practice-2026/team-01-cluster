@@ -1,4 +1,6 @@
-# instrument-cluster
+# Team 01 cluster
+## - Vintila Florin — @Feveu  
+## - Sinigribov Serghei — @SinigribovS
 
 A digital automotive **instrument cluster** — the starter app for the ISSA
 Summer Practice DevOps week. It ships **fully working and green**. Your job for
