@@ -44,7 +44,7 @@ jobs:
       - name: Smoke Test (Boot & cURL)
         run: |
           cd backend
-          ../.venv/bin/python -m app &
+          ../.venv/bin/python dev.py run &
           sleep 5
           curl --fail http://127.0.0.1:8000/health
 
