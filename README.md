@@ -55,9 +55,9 @@ push to this shared template itself.
 > **Tuesday**, once your CI pipeline exists.
 
 <!-- STATUS BADGES — add your CI + release badges here once the pipeline exists:
-[![CI](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)](../../actions)
 [![Release](https://img.shields.io/github/v/release/<owner>/<repo>)](../../releases)
 -->
+[![CI]](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)](../../actions)
 
 ## What it is
 
