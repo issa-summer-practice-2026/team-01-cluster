@@ -20,9 +20,17 @@ def test_state_shape(client):
     resp = client.get("/api/state")
     assert resp.status_code == 200
     data = resp.get_json()
-    assert set(data) == {"speed", "rpm", "fuel", "temp", "gear", "odometer_km", "telltales"}
+    assert set(data) == {
+        "speed",
+        "rpm",
+        "fuel",
+        "temp",
+        "gear",
+        "hyperflash",
+        "odometer_km",
+        "telltales",
+    }
     assert set(data["telltales"]) == set(TELLTALE_KEYS)
-
 
 def test_input_updates_state(client):
     assert client.post("/api/input", json={"speed_kmh": 123.0}).status_code == 204
