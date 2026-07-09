@@ -27,6 +27,8 @@ LOW_FUEL_PCT = 15.0  # low-fuel telltale lights at/under this
 OVERHEAT_TEMP_C = 115.0  # coolant/overheat telltale lights at/over this
 VALID_GEARS = ("P", "R", "N", "D", "1", "2", "3", "4", "5", "6")
 
+MPH_PER_KMH = 0.621371
+
 # Stable telltale keys exposed in /api/state (packets add new ones, never remove).
 TELLTALE_KEYS = (
     "left",
@@ -53,6 +55,7 @@ class RawInput:
     fuel_pct: float = 65.0
     coolant_temp_c: float = 90.0
     gear: str = "P"
+    use_mph: bool = False
     # signal / toggle inputs
     left: bool = False
     right: bool = False
@@ -141,9 +144,18 @@ def compute_telltales(inp: RawInput) -> dict[str, bool]:
 
 def derive_state(inp: RawInput) -> ClusterState:
     """Compose the full derived cluster state from raw inputs (pure)."""
+    base_speed = clamp(inp.speed_kmh, 0.0, SPEED_MAX_KMH)
+    
+    if inp.use_mph:
+        speed_val = base_speed * MPH_PER_KMH
+        unit = "mph"
+    else:
+        speed_val = base_speed
+        unit = "km/h"
+
     return ClusterState(
-        speed_value=clamp(inp.speed_kmh, 0.0, SPEED_MAX_KMH),
-        speed_unit="km/h",
+        speed_value=speed_val,
+        speed_unit=unit,
         speed_fraction=gauge_fraction(inp.speed_kmh, 0.0, SPEED_MAX_KMH),
         rpm=clamp(inp.rpm, 0.0, RPM_MAX),
         rpm_fraction=gauge_fraction(inp.rpm, 0.0, RPM_MAX),

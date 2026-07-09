@@ -136,3 +136,8 @@ class TestDeriveState:
 
     def test_odometer_passes_through(self):
         assert derive_state(RawInput(odometer_km=42.5)).odometer_km == 42.5
+    
+    def test_speed_in_mph(self):
+        state = derive_state(RawInput(speed_kmh=100, use_mph=True))
+        assert state.speed_unit == "mph"
+        assert state.speed_value == pytest.approx(62.1371)
