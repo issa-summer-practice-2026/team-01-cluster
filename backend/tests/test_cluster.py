@@ -122,7 +122,16 @@ class TestTelltales:
 class TestDeriveState:
     def test_to_dict_top_level_shape(self):
         d = derive_state(RawInput()).to_dict()
-        assert set(d) == {"speed", "rpm", "fuel", "temp", "gear", "hyperflash", "odometer_km", "telltales"}
+        assert set(d) == {
+            "speed",
+            "rpm",
+            "fuel",
+            "temp",
+            "gear",
+            "hyperflash",
+            "odometer_km",
+            "telltales",
+        }
 
     def test_hyperflash_when_bulb_out_and_indicating(self):
         assert derive_state(RawInput(bulb_out=True, left=True)).hyperflash is True
