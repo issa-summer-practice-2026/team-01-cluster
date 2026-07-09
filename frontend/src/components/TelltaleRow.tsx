@@ -73,6 +73,11 @@ const ICONS: Partial<Record<TelltaleName, ReactNode>> = {
       <path d="M7.2 13.5h6.2" />
     </g>
   ),
+  shift_light: (
+    <g fill="currentColor">
+      <polygon points="12,3 4,12 9,12 9,21 15,21 15,12 20,12" />
+    </g>
+  ),
   bulb_out: (
     <g fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M8.5 13.6a5 5 0 1 1 7 0c-.8.7-1.3 1.5-1.5 2.6h-4c-.2-1.1-.7-1.9-1.5-2.6z" />

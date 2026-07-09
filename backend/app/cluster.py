@@ -20,6 +20,7 @@ from dataclasses import dataclass
 SPEED_MAX_KMH = 260.0  # full-scale of the speedometer
 RPM_MAX = 8000.0  # full-scale of the tachometer
 REDLINE_RPM = 6500.0  # tach redline starts here; `redline` flag trips at/above
+SHIFT_LIGHT_RPM = 6000.0 
 TEMP_MIN_C = 40.0  # coolant gauge low end (cold)
 TEMP_MAX_C = 130.0  # coolant gauge high end (hot)
 FUEL_MAX_PCT = 100.0  # fuel is expressed 0..100 %
@@ -35,8 +36,11 @@ TELLTALE_KEYS = (
     "high_beam",
     "check_engine",
     "battery",
+    "oil",
     "coolant",
+    "shift_light",
     "low_fuel",
+    "seatbelt", 
     "bulb_out",
 )
 
@@ -60,6 +64,8 @@ class RawInput:
     high_beam: bool = False
     check_engine: bool = False
     battery: bool = False
+    seatbelt: bool = False 
+    oil: bool = False
     bulb_out: bool = False  # lights the bulb-failure telltale; also the hyper-flash packet's seam
     odometer_km: float = 12000.0
 
@@ -133,8 +139,11 @@ def compute_telltales(inp: RawInput) -> dict[str, bool]:
         "high_beam": inp.high_beam,
         "check_engine": inp.check_engine,
         "battery": inp.battery,
+        "oil": inp.oil,  
         "coolant": inp.coolant_temp_c >= OVERHEAT_TEMP_C,
+        "shift_light": inp.rpm >= SHIFT_LIGHT_RPM,
         "low_fuel": inp.fuel_pct <= LOW_FUEL_PCT,
+        "seatbelt": inp.seatbelt,
         "bulb_out": inp.bulb_out,
     }
 
