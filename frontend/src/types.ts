@@ -12,7 +12,7 @@ export interface Telltales {
   coolant: boolean;
   low_fuel: boolean;
   seatbelt?: boolean; // lamp ships in the UI but backend omits it — students add it (docs/backlog/02-seatbelt-telltale)
-  shift_light: boolean;
+  shift_light?: boolean;
   bulb_out: boolean;
 }
 
