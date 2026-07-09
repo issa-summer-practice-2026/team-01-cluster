@@ -102,6 +102,18 @@ class TestTelltales:
         assert compute_telltales(RawInput(bulb_out=True))["bulb_out"] is True
         assert compute_telltales(RawInput())["bulb_out"] is False
 
+    def test_oil_lit_from_toggle(self):
+        assert compute_telltales(RawInput(oil=True))["oil"] is True
+
+    def test_seatbelt_lit_from_toggle(self):
+        assert compute_telltales(RawInput(seatbelt=True))["seatbelt"] is True
+
+    def test_shift_light_at_threshold(self):
+        assert compute_telltales(RawInput(rpm=6000))["shift_light"] is True
+
+    def test_shift_light_below_threshold(self):
+        assert compute_telltales(RawInput(rpm=5999))["shift_light"] is False
+        
     def test_default_is_all_off(self):
         t = compute_telltales(RawInput())
         assert not any(t.values())
