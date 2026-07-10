@@ -30,22 +30,18 @@ jobs:
           cd backend
           ../.venv/bin/ruff check .
 
-      - name: Test & Coverage
-        run: |
-          cd backend
-          ../.venv/bin/pytest --cov=app --cov-fail-under=80
+      - name: Build Docker Image
+        run: docker build -t cluster .
 
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: backend/.coverage
+      - name: Test & Coverage (Inside Container)
+        run: docker run cluster pytest --cov=app --cov-fail-under=80
 
-      - name: Smoke Test (Boot & cURL)
+      - name: Smoke Test (Container Boot & cURL)
         run: |
-          cd backend
-          ../.venv/bin/python -m app &
+          # Pornim containerul în fundal (detached) pe portul 8000
+          docker run -d -p 8000:8000 --name test_cluster cluster
           sleep 5
+          # Verificăm dacă răspunde
           curl --fail http://127.0.0.1:8000/health
 
   frontend:
