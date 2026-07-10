@@ -31,7 +31,7 @@ jobs:
           ../.venv/bin/ruff check .
 
       - name: Build Docker Image
-        run: docker build -t cluster .
+        run: docker build -t cluster:latest .
 
       - name: Test & Coverage (Inside Container)
         run: docker run cluster pytest --cov=app --cov-fail-under=80
