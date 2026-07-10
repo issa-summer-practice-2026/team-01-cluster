@@ -6,7 +6,7 @@ COPY frontend/ ./
 RUN npm ci
 RUN npm run build
 
-Backend + Asamblare
+#Backend + Asamblare
 FROM python:3.13-slim
 WORKDIR /proiect
 
